@@ -5,20 +5,23 @@ import { User } from './user/entities/user.entity';
 import { AppController } from './app.controller';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { YuqlamaModule } from './yuqlama/yuqlama.module';
+import { Yuqlama } from './yuqlama/entities/yuqlama.entity';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       type: 'sqlite',
       database: "yuqlama.db",
-      entities: [User],
+      entities: [User, Yuqlama],
       synchronize: true
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'uploads'),
       serveRoot: '/uploads'
     }),
-    UserModule
+    UserModule,
+    YuqlamaModule
   ],
   controllers: [AppController],
 })

@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import { Yuqlama } from "src/yuqlama/entities/yuqlama.entity";
+import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
 export class User {
@@ -32,6 +33,10 @@ export class User {
 
     @Column({ default: ""})
     parol: string;
+
+    @OneToMany(()=> Yuqlama, (yuqlama)=> yuqlama.user)
+    yuqlamalar: Yuqlama[]
+
 
     @CreateDateColumn()
     created: Date;
