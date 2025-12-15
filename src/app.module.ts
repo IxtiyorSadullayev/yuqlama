@@ -7,6 +7,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { YuqlamaModule } from './yuqlama/yuqlama.module';
 import { Yuqlama } from './yuqlama/entities/yuqlama.entity';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
@@ -21,7 +22,12 @@ import { Yuqlama } from './yuqlama/entities/yuqlama.entity';
       serveRoot: '/uploads'
     }),
     UserModule,
-    YuqlamaModule
+    YuqlamaModule,
+    JwtModule.register({
+      global: true, 
+      secret: 'mysecret',
+      signOptions: {expiresIn: '1h'}
+    })
   ],
   controllers: [AppController],
 })

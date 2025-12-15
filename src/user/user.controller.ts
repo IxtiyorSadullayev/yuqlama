@@ -5,6 +5,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
+import { LoginUserDto } from './dto/login-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -58,4 +59,11 @@ export class UserController {
   remove(@Param('id') id: number) {
     return this.userService.remove(+id);
   }
+
+
+  @Post('login')
+  loginuser(@Body() loginDto: LoginUserDto){
+    return this.userService.login(loginDto);
+  }
+  
 }

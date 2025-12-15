@@ -4,11 +4,14 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
+import { LoginUserDto } from './dto/login-user.dto';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User) private userRepo: Repository<User>
+    @InjectRepository(User) private userRepo: Repository<User>,
+    private jwtService: JwtService
   ) { }
 
   async create(createUserDto: CreateUserDto, photo) {
@@ -58,17 +61,36 @@ export class UserService {
   }
 
   async findByParamsOle(class_name: string, user_type: string) {
-    if (!class_name || !user_type){
+    if (!class_name || !user_type) {
       return []
     }
 
-    const data = await this.userRepo.find({where: {class_name: class_name, user_type: user_type}})
+    const data = await this.userRepo.find({ where: { class_name: class_name, user_type: user_type } })
     return data;
   }
 
-  async getBirthday(){
+  async getBirthday() {
     const bugun = new Date().toISOString().split("T")[0]
     const data = await this.userRepo.find()
-    return data.filter(d => d.birth_day.toISOString().split("T")[0]==bugun)
+    return data.filter(d => d.birth_day.toISOString().split("T")[0] == bugun)
   }
+
+  async login(loginDto: LoginUserDto) {
+    if (loginDto.login =='' || loginDto.password == ''){
+      throw new HttpException("Ma'lumotlar to'liq emas", HttpStatus.BAD_REQUEST)
+    }
+    const user = await this.userRepo.findOne({ where: { login: loginDto.login } })
+    if (!user || user.parol != loginDto.password) {
+      throw new HttpException("User topilmadi, Yokida ma'lumotlar noto'g'ri", HttpStatus.NOT_FOUND)
+    }
+
+    const payload = { role: user.user_type, user_id: user.id }
+
+    return {
+      token: await this.jwtService.signAsync(payload),
+      status: "ok"
+    }
+
+  }
+
 }
