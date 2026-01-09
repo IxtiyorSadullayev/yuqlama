@@ -4,9 +4,8 @@ import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn, Up
 @Entity()
 export class Yuqlama {
 
-    @PrimaryGeneratedColumn()
-    id: number;
-
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @ManyToOne(()=> User, (user)=> user.yuqlamalar)
     user: User; 

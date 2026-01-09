@@ -4,8 +4,8 @@ import { Column, CreateDateColumn, Entity, OneToMany, PrimaryGeneratedColumn, Up
 @Entity()
 export class User {
 
-    @PrimaryGeneratedColumn()
-    id: number;
+    @PrimaryGeneratedColumn('uuid')
+    id: string;
 
     @Column()
     name: string;
@@ -16,31 +16,45 @@ export class User {
     @Column()
     class_name: string;
 
-    @Column({default: ""})
+    @Column({ default: "" })
     photo: string;
 
-    @Column()
+    @Column({})
     birth_day: Date;
 
     @Column()
     user_type: string;
 
-    @Column()
+    @Column({ default: "" })
     tel: string;
 
-    @Column({ default: ""})
+    @Column()
+    jinsi: string;
+
+    @Column({ default: "" })
     login: string;
 
-    @Column({ default: ""})
+    @Column({ default: "" })
     parol: string;
 
-    @OneToMany(()=> Yuqlama, (yuqlama)=> yuqlama.user)
+    @Column({ default: "" })
+    pas_seria: string;
+
+    @Column({ default: '' })
+    pas_number: string;
+
+    @OneToMany(() => Yuqlama, (yuqlama) => yuqlama.user)
     yuqlamalar: Yuqlama[]
 
-
-    @CreateDateColumn()
+    @CreateDateColumn({
+        type: 'date',
+        default: new Date().toISOString()
+    })
     created: Date;
 
-    @UpdateDateColumn()
+    @UpdateDateColumn({
+        type: 'date',
+        default: new Date().toISOString()
+    })
     updated: Date;
 }

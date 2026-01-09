@@ -12,6 +12,10 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+yuqlama.db 
+yuqlama.db/ 
+xls/
+
 # OS
 .DS_Store
 
