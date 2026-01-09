@@ -133,7 +133,6 @@ export class UserService {
         var oy = parseInt(sana.split('.')[1])>=10?parseInt(sana.split('.')[1]): '0'+parseInt(sana.split('.')[1])
         var kun = parseInt(sana.split('.')[0])>=10?parseInt(sana.split('.')[0]): '0'+parseInt(sana.split('.')[0])
         var d = `${parseInt(sana.split(".")[2])}-${oy}-${kun}`
-        console.log(d)
         var user = {
           name: row.values[4],
           fam: row.values[3],
