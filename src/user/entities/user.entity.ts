@@ -46,15 +46,9 @@ export class User {
     @OneToMany(() => Yuqlama, (yuqlama) => yuqlama.user)
     yuqlamalar: Yuqlama[]
 
-    @CreateDateColumn({
-        type: 'date',
-        default: new Date().toISOString()
-    })
+    @CreateDateColumn()
     created: Date;
 
-    @UpdateDateColumn({
-        type: 'date',
-        default: new Date().toISOString()
-    })
+    @UpdateDateColumn()
     updated: Date;
 }

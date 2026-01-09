@@ -130,14 +130,17 @@ export class UserService {
       const sheet = workbook.getWorksheet(1)
       sheet?.eachRow(async row=>{
         var sana =  row.values[6];
-        var d = `${parseInt(sana.split(".")[2])}-${parseInt(sana.split(".")[1])}-${parseInt(sana.split(".")[0])} `
+        var oy = parseInt(sana.split('.')[1])>=10?parseInt(sana.split('.')[1]): '0'+parseInt(sana.split('.')[1])
+        var kun = parseInt(sana.split('.')[0])>=10?parseInt(sana.split('.')[0]): '0'+parseInt(sana.split('.')[0])
+        var d = `${parseInt(sana.split(".")[2])}-${oy}-${kun}`
+        console.log(d)
         var user = {
           name: row.values[4],
           fam: row.values[3],
           class_name: createUserByFileDto.class_name,
           birth_day:d,
           user_type: createUserByFileDto.user_type,
-          jinsi: row.values[5],
+          jinsi: row.values[5], 
           pas_seria: row.values[1],
           pas_number: row.values[2]
         }
